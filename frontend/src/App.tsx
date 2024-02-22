@@ -3,8 +3,11 @@ import Layout from "./layouts/Layout"
 import Home from "./pages/Home"
 import Register from "./pages/Register"
 import SignIn from "./pages/SignIn"
+import useAppContext from "./hooks/useAppContext"
+import AddHotel from "./pages/AddHotel"
 
 const App = () => {
+  const { isLoggedIn } = useAppContext()
   return (
     <>
     <BrowserRouter>
@@ -24,6 +27,14 @@ const App = () => {
             <SignIn />
           </Layout>
         }/>
+        {
+          isLoggedIn && 
+          <Route path="/add-hotel" element={
+            <Layout>
+              <AddHotel />
+            </Layout>
+          }/>
+        }
         <Route path="*" element={<Home />}/>
       </Routes>
     </BrowserRouter>

@@ -1,11 +1,9 @@
 import express from 'express'
-const router = express.Router()
-import multer from "multer";
+import { body } from 'express-validator'
+import multer from "multer"
 import { myHotelsController } from '../controllers/hotelsController'
-import verifyToken from '../middleware/auth';
-import { body } from 'express-validator';
-import { isArgumentsObject } from 'util/types';
-import { isArray } from 'util';
+import verifyToken from '../middleware/auth'
+const router = express.Router()
 
 const storage = multer.memoryStorage()
 
@@ -15,7 +13,7 @@ const upload = multer({
     fileSize: 5 * 1024 * 1024 //5mb
   }
 })
-router.get("/", upload.array("imageFiles", 6), verifyToken, [
+router.get("/", verifyToken, upload.array("imageFiles", 6), verifyToken, [
   body("name").notEmpty().withMessage("Name is required!"),
   body("city").notEmpty().withMessage("City is required!"),
   body("country").notEmpty().withMessage("Country is required!"),

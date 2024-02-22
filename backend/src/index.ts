@@ -1,12 +1,12 @@
-import express from 'express'
-import 'dotenv/config'
-import cors from 'cors'
-import mongoose from 'mongoose'
+import { v2 as cloudinary } from 'cloudinary'
 import cookieParser from 'cookie-parser'
-import userRoute from './routes/users'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express from 'express'
+import mongoose from 'mongoose'
 import authRoute from './routes/auth'
 import hotelsRouter from './routes/my-hotels'
-import { v2 as cloudinary } from 'cloudinary'
+import userRoute from './routes/users'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -14,7 +14,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET
 })
 
-mongoose.connect(process.env.MONGO_URL)
+dotenv.config({
+  path: __dirname + '/.env'
+})
+
+mongoose.connect(process.env.MONGO_URL as string)
 
 const app = express()
 app.use(express.json())

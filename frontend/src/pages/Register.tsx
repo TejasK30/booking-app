@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query"
 import { Link, useNavigate } from "react-router-dom"
 import * as apiClient from "../api-client"
 import useAppContext from "../hooks/useAppContext"
+import Button from "../components/ui/Button"
 
 export type RegisterFormData = {
   firstname: string
@@ -116,12 +117,7 @@ const Register = () => {
           <span className="text-sm">
             Already have an account ? <Link className="text-blue-600" to={'/sign-in'}>Login here</Link>            
           </span>
-          <button
-          type="submit"
-          className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
-        >
-          Create Account
-          </button>
+          <Button type="submit" text="Register"/>
         </span>
     </form>
     </>

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 import * as apiClient from "../api-client"
 import useAppContext from "../hooks/useAppContext"
+import Button from "./ui/Button"
 
 const SignOutButton = () => {
 
@@ -27,9 +28,7 @@ const SignOutButton = () => {
 
   return (
     <>
-      <button onClick={handleClick} className="text-blue-600 px-3 font-bold bg-white hover:bg-gray-100">
-        Sign out
-      </button>
+      <Button type="submit" text="Sign Out" onClick={handleClick}/>
     </>
   )
 }
