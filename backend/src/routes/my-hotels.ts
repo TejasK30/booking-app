@@ -1,10 +1,8 @@
-import express, { Request, Response } from "express"
-import multer from "multer"
-import cloudinary from "cloudinary"
-import verifyToken from "../middleware/auth"
+import express from "express"
 import { body } from "express-validator"
-import Hotel, { HotelType } from "../models/Hotels"
-
+import multer from "multer"
+import verifyToken from "../middleware/auth"
+import { myHotelsController, getAllHotels } from "../controllers/hotelsController"
 
 const router = express.Router()
 
@@ -35,38 +33,9 @@ router.post(
       .withMessage("Facilities are required"),
   ],
   upload.array("imageFiles", 6),
-  async (req: Request, res: Response) => {
-    try {
-      const imageFiles = req.files as Express.Multer.File[]
-      const newHotel: HotelType = req.body;
-
-      const imageUrls = await uploadImages(imageFiles)
-
-      newHotel.imageUrls = imageUrls
-      newHotel.lastUpdated = new Date()
-      newHotel.userId = req.userId;
-
-      const hotel = new Hotel(newHotel)
-      await hotel.save()
-
-      res.status(201).send(hotel)
-    } catch (e) {
-      console.log(e)
-      res.status(500).json({ message: "Something went wrong" })
-    }
-  }
+  myHotelsController
 )
 
-async function uploadImages(imageFiles: Express.Multer.File[]) {
-  const uploadPromises = imageFiles.map(async (image) => {
-    const b64 = Buffer.from(image.buffer).toString("base64")
-    let dataURI = "data:" + image.mimetype + ";base64," + b64
-    const res = await cloudinary.v2.uploader.upload(dataURI)
-    return res.url
-  })
-
-  const imageUrls = await Promise.all(uploadPromises)
-  return imageUrls
-}
+router.get('/', verifyToken, getAllHotels)
 
 export default router
