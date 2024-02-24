@@ -8,14 +8,14 @@ import authRoute from './routes/auth'
 import hotelsRouter from './routes/my-hotels'
 import userRoute from './routes/users'
 
+dotenv.config({
+  path: __dirname + '/.env'
+})
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API,
   api_secret: process.env.CLOUDINARY_SECRET
-})
-
-dotenv.config({
-  path: __dirname + '/.env'
 })
 
 mongoose.connect(process.env.MONGO_URL as string)

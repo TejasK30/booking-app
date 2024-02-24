@@ -3,7 +3,6 @@ import { SignInFormData } from "./pages/SignIn";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-
 export async function register (formData: RegisterFormData) {
   const response = await fetch(`${API_BASE_URL}/api/users/register`,{
     method: 'POST',
@@ -57,3 +56,20 @@ export const SignOut = async() => {
     throw new Error("Error signing out")
   }
 } 
+
+export const addMyHotel = async(hotelFormData: FormData) => { 
+  console.log(hotelFormData)
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels`,{
+    method: 'POST',
+    credentials: "include",
+    body: hotelFormData
+    
+  })
+
+  if(!response.ok){
+    throw new Error("Failed to add the hotel !")
+  }
+
+  return response.json()
+
+}
