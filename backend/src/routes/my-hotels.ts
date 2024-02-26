@@ -2,7 +2,7 @@ import express from "express"
 import { body } from "express-validator"
 import multer from "multer"
 import verifyToken from "../middleware/auth"
-import { myHotelsController, getAllHotels } from "../controllers/hotelsController"
+import { myHotelsController, getAllHotels, getHotelById, updateHotel } from "../controllers/hotelsController"
 
 const router = express.Router()
 
@@ -37,5 +37,9 @@ router.post(
 )
 
 router.get('/', verifyToken, getAllHotels)
+
+router.get('/:id', verifyToken, getHotelById)
+
+router.put('/:hotelId', verifyToken, upload.array("imageFiles"), updateHotel )
 
 export default router
