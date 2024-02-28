@@ -24,7 +24,7 @@ const ImagesSection = () => {
             <div className="grid grid-cols-6 gap-4">
               {
                 existingImageUrls.map((url) => (
-                  <div className="relative group">
+                  <div className="relative group" key={url}>
                     <img src={url} className="h-full object-contain" />
                     <button onClick={(e) => handleDeleteButton(e, url )} className="absolute inset-0 flex items-center justify-center"><MdDelete className="text-red-600 text-xl hover:bg-red-400 rounded" /></button>
                   </div>

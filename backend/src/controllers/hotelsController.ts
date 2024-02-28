@@ -3,19 +3,6 @@ import { Request, Response } from "express"
 import Hotel from "../models/Hotels"
 import { HotelType } from '../shared/types'
 
-const uploadImages = async (imageFiles: Express.Multer.File[]) => {
-  const uploadPromises = imageFiles.map(async (image) => { 
-    const b64 = Buffer.from(image.buffer).toString("base64")
-    let dataURI = "data:" + image.mimetype + ";base64," + b64
-    const res = await cloudinary.v2.uploader.upload(dataURI)
-    return res.url
-  })
-
-  const imageUrls = await Promise.all(uploadPromises)
-  return imageUrls
-}
-
-
 export const myHotelsController = async( req: Request, res: Response ) => {
   try{
     const imageFiles = req.files as Express.Multer.File[]
@@ -65,17 +52,16 @@ export const getHotelById = async( req: Request, res: Response ) => {
 }
 
 export const updateHotel = async( req: Request, res: Response ) => {
-  const hotelId = req.params.hotelId
   try {
     const updatedHotel: HotelType = req.body
 
     updatedHotel.lastUpdated = new Date()
 
     const hotel = await Hotel.findOneAndUpdate({
-      _id: hotelId,
+      _id: req.params.hotelId,
       userId: req.userId
     },
-      updateHotel,
+      updatedHotel,
       { new: true }
     )
 
@@ -90,7 +76,21 @@ export const updateHotel = async( req: Request, res: Response ) => {
     await hotel.save()
     res.status(201).json(hotel)
   } catch (error) {
+    console.log(error)
     res.json({message: "Something went wrong"})   
   }
 
+}
+
+
+const uploadImages = async (imageFiles: Express.Multer.File[]) => {
+  const uploadPromises = imageFiles.map(async (image) => { 
+    const b64 = Buffer.from(image.buffer).toString("base64")
+    let dataURI = "data:" + image.mimetype + ";base64," + b64
+    const res = await cloudinary.v2.uploader.upload(dataURI)
+    return res.url
+  })
+
+  const imageUrls = await Promise.all(uploadPromises)
+  return imageUrls
 }
