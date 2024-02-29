@@ -2,7 +2,7 @@ import express from "express"
 import { body } from "express-validator"
 import multer from "multer"
 import verifyToken from "../middleware/auth"
-import { myHotelsController, getAllHotels, getHotelById, updateHotel } from "../controllers/hotelsController"
+import { myHotelsController, getAllHotels, getHotelById, updateHotel } from "../controllers/myHotelsController"
 
 const router = express.Router()
 

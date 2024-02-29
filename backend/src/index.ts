@@ -5,7 +5,8 @@ import dotenv from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoute from './routes/auth'
-import hotelsRouter from './routes/my-hotels'
+import myhotelsRoute from './routes/my-hotels'
+import hotelsRoute from './routes/hotels'
 import userRoute from './routes/users'
 
 dotenv.config({
@@ -31,7 +32,8 @@ app.use(cors({
 
 app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
-app.use('/api/my-hotels', hotelsRouter)
+app.use('/api/my-hotels', myhotelsRoute)
+app.use('/api/hotels', hotelsRoute)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is listening on port: ${process.env.PORT}`)  
