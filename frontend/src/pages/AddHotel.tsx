@@ -12,7 +12,7 @@ const AddHotel = () => {
       showToast({message: "Hotel saved !", type: "SUCCESS"})
     },
     onError: () => {
-      showToast({message: "Error saving hotel !", type: "ERROR"})
+      showToast({message: "Error saving hotel! please try again", type: "ERROR"})
     }
   })
 

@@ -118,6 +118,11 @@ export type SearchParams = {
   adultCount?: string
   childCount?: string
   page?: string
+  facilities?: string[]
+  types?: string[]
+  stars?: string[]
+  maxPrice?: string
+  sortOption?: string
 }
 
 export const searchHotel = async(SearchParams: SearchParams): Promise<HotelSearchResponse> => {
@@ -131,6 +136,13 @@ export const searchHotel = async(SearchParams: SearchParams): Promise<HotelSearc
   queryParams.append("childCount", SearchParams.childCount || '')
   queryParams.append("page", SearchParams.page || '')
   
+  queryParams.append("maxPrice", SearchParams.maxPrice || '')
+  queryParams.append("sortOption", SearchParams.sortOption || '')
+
+  SearchParams.types?.forEach((type) => queryParams.append("types", type))
+  SearchParams.facilities?.forEach((facility) => queryParams.append("facilities", facility))
+  SearchParams.stars?.forEach((star) => queryParams.append("stars", star))
+
   const response = await fetch(`${API_BASE_URL}/api/hotels/search?${queryParams}`)
 
   if(!response.ok){
