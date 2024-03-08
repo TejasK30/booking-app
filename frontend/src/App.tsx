@@ -13,63 +13,85 @@ const App = () => {
   const { isLoggedIn } = useAppContext()
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          <Layout>
-            <Home />
-          </Layout>
-        }/>
-        <Route path="/search" element={
-          <Layout>
-            <Search />
-          </Layout>
-        }/>
-        <Route path="/register" element={
-          <Layout>
-            <Register />
-          </Layout>
-        }/>
-        <Route path="/sign-in" element={
-          <Layout>
-            <SignIn />
-          </Layout>
-        }/>
-        {
-          isLoggedIn && 
-          (
-            <Route path="/add-hotel" element={
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
               <Layout>
-                <AddHotel />
+                <Home />
               </Layout>
-            }/>
-          )
-        }
-        {
-          isLoggedIn && (
-            <>
-              <Route path="/my-hotels" element={
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <Layout>
+                <Search />
+              </Layout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Layout>
+                <Register />
+              </Layout>
+            }
+          />
+          <Route
+            path="/sign-in"
+            element={
+              <Layout>
+                <SignIn />
+              </Layout>
+            }
+          />
+          {isLoggedIn && (
+            <Route
+              path="/add-hotel"
+              element={
                 <Layout>
-                  <MyHotels />
+                  <AddHotel />
                 </Layout>
-              }/>
-            </>
-          )
-        }
-        {
-          isLoggedIn && (
+              }
+            />
+          )}
+          {isLoggedIn && (
             <>
-              <Route path="/edit-hotel/:hotelId" element={
-                <Layout>
-                  <EditHotel />
-                </Layout>
-              }/>
+              <Route
+                path="/my-hotels"
+                element={
+                  <Layout>
+                    <MyHotels />
+                  </Layout>
+                }
+              />
             </>
-          )
-        }
-        <Route path="*" element={<Home />}/>
-      </Routes>
-    </BrowserRouter>
+          )}
+          {isLoggedIn && (
+            <>
+              <Route
+                path="/edit-hotel/:hotelId"
+                element={
+                  <Layout>
+                    <EditHotel />
+                  </Layout>
+                }
+              />
+            </>
+          )}
+          <Route
+            path="/detail/:hotelId"
+            element={
+              <Layout>
+                <SignIn />
+              </Layout>
+            }
+          />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

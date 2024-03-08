@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { validationResult } from "express-validator"
 import Hotel from "../models/Hotels"
 import { HotelSearchResponse } from "../shared/types"
 
@@ -27,12 +28,10 @@ export const searchController = async (req: Request, res: Response) => {
 
     const skip = (pageNumber - 1) * pageSize
 
-    const hotels = await Hotel.find(query)
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(pageSize)
-
-    const total = await Hotel.countDocuments()
+    const hotels = await Hotel.find(query).sort(sortOptions).skip(skip).limit(pageSize)
+    console.log(hotels)
+    
+    const total = await Hotel.countDocuments(query)
 
     const response: HotelSearchResponse = {
       data: hotels,
@@ -47,6 +46,24 @@ export const searchController = async (req: Request, res: Response) => {
   } catch (error) {
     console.log("error: ", error)
     res.status(500).json({ message: "something went wrong!" })
+  }
+}
+
+export const getHotelById = async (req: Request, res: Response) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  const id = req.params.id
+
+  try {
+    const hotel = await Hotel.findById(id)
+    res.json(hotel)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: "Error fetching hotel" })
   }
 }
 
@@ -98,7 +115,7 @@ const constructSearchQuery = (queryParams: any) => {
 
   if (queryParams.maxPrice) {
     constructedQuery.pricePerNight = {
-      $lte: parseInt(queryParams.maxPrice).toString(),
+      $lte: parseInt(queryParams.maxPrice).toString()
     }
   }
 
