@@ -1,3 +1,11 @@
+export type UserType = {
+  _id: string
+  email: string
+  password: string
+  firstname: string
+  lastname: string
+}
+
 export type HotelType = {
   _id: string
   userId: string
@@ -22,4 +30,10 @@ export type HotelSearchResponse = {
     page: number
     pages: number
   }
+}
+
+export type paymentIntentResponse = {
+  paymentIntentId: string
+  clientSecret: string
+  totalCost: number
 }
