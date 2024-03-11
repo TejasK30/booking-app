@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import dotenv from 'dotenv'
+import 'dotenv/config'
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoute from './routes/auth'
@@ -9,9 +9,6 @@ import myhotelsRoute from './routes/my-hotels'
 import hotelsRoute from './routes/hotels'
 import userRoute from './routes/users'
 
-dotenv.config({
-  path: __dirname + '/.env'
-})
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,

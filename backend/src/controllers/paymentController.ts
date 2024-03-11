@@ -1,7 +1,8 @@
-import { Request, Response, response } from "express"
+import { Request, Response } from "express"
 import Hotel from "../models/Hotels"
 import Stripe from "stripe"
 import { BookingType } from "../shared/types"
+
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string)
 
 export const Payment = async (req: Request, res: Response) => {
@@ -87,7 +88,6 @@ export const bookingController = async (req: Request, res: Response) => {
     await hotel.save()
 
     res.status(200).send()
-
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: "Something went wrong !" })
